@@ -1,0 +1,12 @@
+# Custom dependencies for parallel backtest tool and testing
+# Install with: pip install -r requirements-custom.txt
+
+# Progress bar for parallel backtest tool
+tqdm>=4.66.0
+
+# Property-based testing framework
+hypothesis>=6.92.0
+
+# Testing framework (if not already installed with freqtrade)
+pytest>=7.4.0
+pytest-cov>=4.1.0

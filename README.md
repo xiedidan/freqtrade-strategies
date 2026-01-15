@@ -22,6 +22,11 @@ bot.
 ## Table of Content
 
 - [Free trading strategies](#free-trading-strategies)
+- [Parallel Backtest Tool](#parallel-backtest-tool)
+    - [Installation](#installation)
+    - [Usage](#usage)
+    - [Parameters](#parameters)
+    - [Examples](#examples)
 - [Contribute](#share-your-own-strategies-and-contribute-to-this-repo)
 - [FAQ](#faq)
     - [What is Freqtrade?](#what-is-freqtrade)
@@ -52,6 +57,91 @@ It's noteworthy that depending on the exchange and Pairs used, further optimizat
 Please keep in mind, results will heavily depend on the pairs, timeframe and timerange used to backtest - so please run your own backtests that mirror your usecase, to evaluate each strategy for yourself.
 
 The results above should serve as a general outline to demonstrate the number of trades to expect. Actual performance will be different based on various factors.
+
+## Parallel Backtest Tool
+
+并行回测工具 - 通过为每个交易对启动独立的回测进程实现并行化，显著减少总回测时间。
+
+### Installation
+
+1. 确保已安装 Python 3.8+ 和 Freqtrade
+
+2. 安装依赖：
+
+```bash
+# 创建并激活虚拟环境
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
+
+# 安装自定义依赖
+pip install -r requirements-custom.txt
+```
+
+### Usage
+
+基本用法：
+
+```bash
+python -m parallel_backtest --config <config_file> --strategy <strategy_name>
+```
+
+### Parameters
+
+| 参数 | 简写 | 必需 | 默认值 | 说明 |
+|------|------|------|--------|------|
+| `--config` | `-c` | ✓ | - | Freqtrade 配置文件路径 |
+| `--strategy` | `-s` | ✓ | - | 策略名称 |
+| `--timerange` | - | - | - | 回测时间范围 (如 `20240101-20241231`) |
+| `--workers` | `-w` | - | CPU核心数-1 | 最大并发工作进程数 |
+| `--output` | `-o` | - | `user_data/backtest_results` | 输出目录 |
+| `--pairs` | `-p` | - | 配置文件中的 pair_whitelist | 交易对列表 |
+| `--timeout` | - | - | 3600 | 单个回测超时时间（秒） |
+| `--debug` | - | - | false | 调试模式，保留临时文件 |
+
+使用 `--` 分隔符可以将额外参数透传给 Freqtrade。
+
+### Examples
+
+```bash
+# 基本用法 - 使用配置文件中的交易对
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1
+
+# 指定交易对（空格分隔）
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    --pairs BTC/USDT ETH/USDT SOL/USDT
+
+# 指定交易对（逗号分隔）
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    --pairs "BTC/USDT,ETH/USDT,SOL/USDT"
+
+# 指定时间范围和工作进程数
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    --timerange 20240101-20241231 --workers 4
+
+# 指定输出路径
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    --output user_data/backtest_results/my_result.json
+
+# 调试模式（保留临时文件）
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    --debug
+
+# 透传 Freqtrade 参数
+python -m parallel_backtest --config configs/HourBreakout1.json --strategy HourBreakout1 \
+    -- --cache none --enable-protections
+```
+
+### Features
+
+- **并行执行**: 为每个交易对启动独立的回测进程，充分利用多核 CPU
+- **资源隔离**: 每个工作进程使用独立的配置文件、输出目录和日志文件
+- **结果合并**: 自动合并所有回测结果，生成 Freqtrade 兼容的统一报告
+- **进度监控**: 实时显示进度条和已完成任务数
+- **错误容错**: 单个交易对失败不影响其他任务，最终报告显示失败详情
+- **优雅中断**: 支持 Ctrl+C 优雅终止，保存部分结果
 
 ## Share your own strategies and contribute to this repo
 

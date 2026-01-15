@@ -1,0 +1,133 @@
+{
+    "$schema": "https://schema.freqtrade.io/schema.json",
+    "strategy": "HourBreakout1",
+    "strategy_path": "user_data/strategies",
+    
+    "max_open_trades": 3,
+    "stake_currency": "USDT",
+    "stake_amount": "unlimited",
+    "tradable_balance_ratio": 0.99,
+    "fiat_display_currency": "USD",
+    
+    "timeframe": "1m",
+    
+    "dry_run": true,
+    "dry_run_wallet": 1000,
+    "cancel_open_orders_on_exit": false,
+    
+    "trading_mode": "spot",
+    "margin_mode": "",
+    
+    "unfilledtimeout": {
+        "entry": 10,
+        "exit": 10,
+        "exit_timeout_count": 0,
+        "unit": "minutes"
+    },
+    
+    "entry_pricing": {
+        "price_side": "other",
+        "use_order_book": true,
+        "order_book_top": 1,
+        "price_last_balance": 0.0,
+        "check_depth_of_market": {
+            "enabled": false,
+            "bids_to_ask_delta": 1
+        }
+    },
+    
+    "exit_pricing": {
+        "price_side": "other",
+        "use_order_book": true,
+        "order_book_top": 1
+    },
+    
+    "exchange": {
+        "name": "binance",
+        "key": "",
+        "secret": "",
+        "ccxt_config": {
+            "aiohttp_proxy": "http://127.0.0.1:7890",
+            "proxies": {
+                "http": "http://127.0.0.1:7890",
+                "https": "http://127.0.0.1:7890"
+            }
+        },
+        "ccxt_sync_config": {
+            "proxies": {
+                "http": "http://127.0.0.1:7890",
+                "https": "http://127.0.0.1:7890"
+            }
+        },
+        "pair_whitelist": [
+            "BTC/USDT",
+            "ETH/USDT",
+            "BNB/USDT",
+            "SOL/USDT",
+            "XRP/USDT"
+        ],
+        "pair_blacklist": [
+            "BNB/.*"
+        ]
+    },
+    
+    "pairlists": [
+        {
+            "method": "StaticPairList"
+        }
+    ],
+    
+    "telegram": {
+        "enabled": false,
+        "token": "",
+        "chat_id": ""
+    },
+    
+    "api_server": {
+        "enabled": false,
+        "listen_ip_address": "127.0.0.1",
+        "listen_port": 8080,
+        "verbosity": "error",
+        "enable_openapi": false,
+        "jwt_secret_key": "",
+        "ws_token": "",
+        "CORS_origins": [],
+        "username": "",
+        "password": ""
+    },
+    
+    "bot_name": "HourBreakout1Bot",
+    "initial_state": "running",
+    "force_entry_enable": false,
+    
+    "internals": {
+        "process_throttle_secs": 5
+    },
+    
+    "minimal_roi": {
+        "60": 0.01,
+        "30": 0.02,
+        "15": 0.03,
+        "0": 0.05
+    },
+    
+    "stoploss": -0.05,
+    
+    "trailing_stop": false,
+    
+    "hourbreakout1_params": {
+        "ma_period": 5,
+        "exit_minutes": 15,
+        "min_breakout_pct": 0.002,
+        "pullback_tolerance": 0.0005,
+        "max_position_hours": 4.0,
+        "min_volume_threshold": 1.0,
+        "stop_loss_buffer_pct": 0.005,
+        "min_entry_spacing": 15,
+        "breakout_strength_threshold": 0.002,
+        "rebound_strength_threshold": 0.003
+    },
+    
+    "dataformat_ohlcv": "feather",
+    "dataformat_trades": "feather"
+}
