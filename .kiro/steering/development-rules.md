@@ -43,6 +43,42 @@ inclusion: always
 - 为复杂逻辑添加全面的英文注释
 - 保持代码结构清晰可读
 
+## WSL2 Environment Rules / WSL2环境规则
+
+1. **WSL2 Access and Usage** / WSL2访问和使用
+   - 可以通过 `wsl -e bash -c "command"` 直接在WSL2中执行命令
+   - WSL2用户名：xd
+   - WSL2密码：xdunix12
+   - 项目路径：`/mnt/d/project/freqtrade-strategies`
+
+2. **Sudo Command Execution** / Sudo命令执行
+   - 使用 `echo 'xdunix12' | sudo -S command` 方式传递密码
+   - 避免交互式密码输入导致命令卡住
+   - 示例：`wsl -e bash -c "echo 'xdunix12' | sudo -S apt-get update"`
+
+3. **Conda Environment Management** / Conda环境管理
+   - Miniconda安装路径：`~/miniconda3`
+   - GPU环境名称：`freqtrade-gpu`
+   - 激活环境：`source ~/miniconda3/bin/activate freqtrade-gpu`
+   - 完整命令示例：`wsl -e bash -c "source ~/miniconda3/bin/activate freqtrade-gpu && python script.py"`
+
+4. **GPU Environment** / GPU环境
+   - GPU型号：NVIDIA GeForce RTX 3060 Ti (8GB)
+   - CUDA版本：12.5
+   - cuDF版本：24.12.00
+   - 验证GPU：`wsl -e bash -c "nvidia-smi"`
+
+5. **File Path Conversion** / 文件路径转换
+   - Windows路径：`D:\project\freqtrade-strategies`
+   - WSL2路径：`/mnt/d/project/freqtrade-strategies`
+   - 在WSL2中访问Windows文件使用 `/mnt/` 前缀
+
+6. **Common WSL2 Commands** / 常用WSL2命令
+   - 检查WSL状态：`wsl --status`
+   - 重启WSL：`wsl --shutdown` (在PowerShell中)
+   - 列出分发版：`wsl --list --verbose`
+   - 进入WSL：`wsl` (默认分发版)
+
 ## Project Management Rules / 项目管理规则
 
 1. **Kanban Board Management** / 看板管理
