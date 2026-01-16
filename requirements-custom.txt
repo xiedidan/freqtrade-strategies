@@ -10,3 +10,11 @@ hypothesis>=6.92.0
 # Testing framework (if not already installed with freqtrade)
 pytest>=7.4.0
 pytest-cov>=4.1.0
+
+# Optional: GPU acceleration with RAPIDS cuDF (Linux/WSL2 only)
+# Note: cuDF is not available via pip on Windows. Use WSL2 or Linux.
+# Installation instructions: https://docs.rapids.ai/install/
+# For WSL2/Linux with CUDA 12.x:
+#   conda install -c rapidsai -c conda-forge -c nvidia cudf=24.12 python=3.12 cuda-version=12.5
+# Or use pip (experimental):
+#   pip install cudf-cu12 --extra-index-url=https://pypi.nvidia.com
