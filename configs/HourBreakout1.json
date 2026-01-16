@@ -47,16 +47,16 @@
         "key": "",
         "secret": "",
         "ccxt_config": {
-            "aiohttp_proxy": "http://127.0.0.1:7890",
+            "aiohttp_proxy": "http://127.0.0.1:10809",
             "proxies": {
-                "http": "http://127.0.0.1:7890",
-                "https": "http://127.0.0.1:7890"
+                "http": "http://127.0.0.1:10809",
+                "https": "http://127.0.0.1:10809"
             }
         },
         "ccxt_sync_config": {
             "proxies": {
-                "http": "http://127.0.0.1:7890",
-                "https": "http://127.0.0.1:7890"
+                "http": "http://127.0.0.1:10809",
+                "https": "http://127.0.0.1:10809"
             }
         },
         "pair_whitelist": [
